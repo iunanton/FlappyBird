@@ -14,10 +14,14 @@ public class BirdSprite {
     private int flitterCoef = 4;
     private int currentFrame;
 
+    // TODO: получить в переменные значения ширины и высоты экрана
+    // TODO: вынести эти переменные в GameView класс
     //display constants
     private int screenWidth = 1400;
     private int screenHeight = 3200;
 
+    // TODO: Привести переменные к типу double
+    // TODO: Оформить эффект гравитации, увеличение скорости
     // physical constants
     private int x, y;
     private int flapY = 200;

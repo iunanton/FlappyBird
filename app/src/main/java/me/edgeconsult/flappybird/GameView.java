@@ -100,7 +100,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (canvas != null) {
-            // TODO: получить размеры дисплея и адаптировать фоновое изображение
             backgroundSprite.draw(canvas);
             canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
             canvas.drawText("DW: " + displayWidth, 50,100, paint);

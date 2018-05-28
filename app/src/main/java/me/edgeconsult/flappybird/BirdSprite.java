@@ -19,11 +19,11 @@ public class BirdSprite {
     private int displayWidth;
     private int displayHeight;
 
-    // TODO: Привести переменные к типу double
-    // TODO: Оформить эффект гравитации, увеличение скорости
     // physical constants
-    private int x, y;
-    private int flapY = 200;
+    private double posX, posY;
+    private double velY = 0;
+    private double accY = 3;
+    private int flapY = 50;
 
     public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
         this.image = image;
@@ -33,20 +33,23 @@ public class BirdSprite {
         birdWidth = image.getWidth()/BMP_COLUMNS;
         birdHeight = image.getHeight()/BMP_ROWS;
 
-        x = (displayWidth - birdWidth) / 2;
-        y = (displayHeight - birdHeight) / 2;
+        posX = (displayWidth - birdWidth) / 2;
+        posY = (displayHeight - birdHeight) / 2;
     }
 
     public void flap() {
-        y -= flapY;
+        velY -= flapY;
     }
 
     public void update() {
         currentFrame++;
-        y += 2;
+        velY += accY - 0.1 * velY;
+        posY += velY;
     }
 
     public void draw(Canvas canvas) {
+        int x = (int) posX;
+        int y = (int) posY;
         int srcX = currentFrame / flitterCoef % BMP_COLUMNS * birdWidth;
         int srcY = birdHeight;
         Rect src = new Rect(srcX, srcY, srcX + birdWidth, srcY + birdHeight);

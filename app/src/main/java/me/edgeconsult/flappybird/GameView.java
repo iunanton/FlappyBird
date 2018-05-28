@@ -1,9 +1,9 @@
 package me.edgeconsult.flappybird;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -46,6 +46,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
             retry = false;
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            performClick(); // для обратной совместимости мы должны вызвать метод performClick
+        }
+        return true;
+    }
+
+    // здесь производим обработку нажатия
+    @Override
+    public boolean performClick() {
+        super.performClick();
+        birdSprite.flap();
+        return true;
     }
 
     public void update() {

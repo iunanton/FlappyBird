@@ -4,7 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -16,6 +17,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private Bitmap bgg;
     private BirdSprite birdSprite;
+    private Paint paint;
 
     public GameView(Context context) {
         super(context);
@@ -24,6 +26,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+
+        paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextSize(30);
     }
 
     @Override
@@ -80,6 +87,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (canvas != null) {
             // TODO: получить размеры дисплея и адаптировать фоновое изображение
             canvas.drawBitmap(bgg, 0, 0, null);
+            canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
             birdSprite.draw(canvas);
         }
     }

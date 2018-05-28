@@ -1,11 +1,13 @@
 package me.edgeconsult.flappybird;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -16,8 +18,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     private Bitmap bgg;
+    private BackgroundSprite backgroundSprite;
     private BirdSprite birdSprite;
     private Paint paint;
+    private int displayWidth;
+    private int displayHeight;
 
     public GameView(Context context) {
         super(context);
@@ -31,6 +36,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(30);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        displayWidth = displayMetrics.widthPixels;
+        displayHeight = displayMetrics.heightPixels;
     }
 
     @Override
@@ -41,7 +51,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         bgg = BitmapFactory.decodeResource(getResources(), R.drawable.bgg);
-        birdSprite = new BirdSprite(BitmapFactory.decodeResource(getResources(), R.drawable.bird));
+        backgroundSprite = new BackgroundSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.bgg),
+                displayWidth, displayHeight);
+        birdSprite = new BirdSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.bird),
+                displayWidth, displayHeight);
 
         thread.setRunning(true);
         thread.start();
@@ -86,8 +101,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if (canvas != null) {
             // TODO: получить размеры дисплея и адаптировать фоновое изображение
-            canvas.drawBitmap(bgg, 0, 0, null);
+            backgroundSprite.draw(canvas);
             canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
+            canvas.drawText("DW: " + displayWidth, 50,100, paint);
+            canvas.drawText("DH: " + displayHeight, 50,150, paint);
             birdSprite.draw(canvas);
         }
     }

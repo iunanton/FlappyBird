@@ -6,19 +6,18 @@ import android.graphics.Rect;
 
 public class BirdSprite {
     private Bitmap image;
+
     private final int BMP_ROWS = 6;
     private final int BMP_COLUMNS = 3;
     private int birdWidth, birdHeight;
 
-    private int targetFPS = 60;
-    private int flitterCoef = 4;
+    private int targetFPS = 30;
+    private int flitterCoef = 2;
     private int currentFrame;
 
-    // TODO: получить в переменные значения ширины и высоты экрана
-    // TODO: вынести эти переменные в GameView класс
     //display constants
-    private int screenWidth = 1400;
-    private int screenHeight = 3200;
+    private int displayWidth;
+    private int displayHeight;
 
     // TODO: Привести переменные к типу double
     // TODO: Оформить эффект гравитации, увеличение скорости
@@ -26,14 +25,16 @@ public class BirdSprite {
     private int x, y;
     private int flapY = 200;
 
-    public BirdSprite(Bitmap image) {
+    public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
         this.image = image;
+        this.displayWidth = displayWidth;
+        this.displayHeight = displayHeight;
         currentFrame = 0;
         birdWidth = image.getWidth()/BMP_COLUMNS;
         birdHeight = image.getHeight()/BMP_ROWS;
 
-        x = screenWidth / 2;
-        y = screenHeight / 2;
+        x = (displayWidth - birdWidth) / 2;
+        y = (displayHeight - birdHeight) / 2;
     }
 
     public void flap() {

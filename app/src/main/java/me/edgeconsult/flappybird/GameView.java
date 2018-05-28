@@ -1,6 +1,8 @@
 package me.edgeconsult.flappybird;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -8,6 +10,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
+    private BirdSprite birdSprite;
 
     public GameView(Context context) {
         super(context);
@@ -25,6 +28,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        birdSprite = new BirdSprite(BitmapFactory.decodeResource(getResources(), R.drawable.bird));
+
         thread.setRunning(true);
         thread.start();
     }
@@ -44,11 +49,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-
+        birdSprite.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        if (canvas != null) {
+            birdSprite.draw(canvas);
+        }
     }
 }

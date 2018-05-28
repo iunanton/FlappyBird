@@ -1,17 +1,20 @@
 package me.edgeconsult.flappybird;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-// TODO: добавить pipes и фоновое изображение
+// TODO: добавить pipes
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
+    private Bitmap bgg;
     private BirdSprite birdSprite;
 
     public GameView(Context context) {
@@ -30,6 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        bgg = BitmapFactory.decodeResource(getResources(), R.drawable.bgg);
         birdSprite = new BirdSprite(BitmapFactory.decodeResource(getResources(), R.drawable.bird));
 
         thread.setRunning(true);
@@ -74,6 +78,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (canvas != null) {
+            // TODO: получить размеры дисплея и адаптировать фоновое изображение
+            canvas.drawBitmap(bgg, 0, 0, null);
             birdSprite.draw(canvas);
         }
     }

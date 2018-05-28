@@ -59,7 +59,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         birdSprite = new BirdSprite(
                 BitmapFactory.decodeResource(getResources(), R.drawable.bird),
                 displayWidth, displayHeight);
-        pipeSprite = new PipeSprite(BitmapFactory.decodeResource(getResources(), R.drawable.pipe),
+        pipeSprite = new PipeSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.pipe),
                 displayWidth, displayHeight);
 
         thread.setRunning(true);
@@ -107,12 +108,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if (canvas != null) {
             backgroundSprite.draw(canvas);
+            pipeSprite.Draw(canvas);
             grassSprite.draw(canvas);
             canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
             canvas.drawText("DW: " + displayWidth, 50,100, paint);
             canvas.drawText("DH: " + displayHeight, 50,150, paint);
             birdSprite.draw(canvas);
-            pipeSprite.Draw(canvas);
         }
     }
 }

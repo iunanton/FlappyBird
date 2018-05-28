@@ -2,7 +2,6 @@ package me.edgeconsult.flappybird;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,8 +16,8 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
-    private Bitmap bgg;
     private BackgroundSprite backgroundSprite;
+    private GrassSprite grassSprite;
     private BirdSprite birdSprite;
     private Paint paint;
     private int displayWidth;
@@ -50,9 +49,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        bgg = BitmapFactory.decodeResource(getResources(), R.drawable.bgg);
         backgroundSprite = new BackgroundSprite(
                 BitmapFactory.decodeResource(getResources(), R.drawable.bgg),
+                displayWidth, displayHeight);
+        grassSprite = new GrassSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.grass),
                 displayWidth, displayHeight);
         birdSprite = new BirdSprite(
                 BitmapFactory.decodeResource(getResources(), R.drawable.bird),
@@ -93,6 +94,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        grassSprite.update();
         birdSprite.update();
     }
 
@@ -101,6 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if (canvas != null) {
             backgroundSprite.draw(canvas);
+            grassSprite.draw(canvas);
             canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
             canvas.drawText("DW: " + displayWidth, 50,100, paint);
             canvas.drawText("DH: " + displayHeight, 50,150, paint);

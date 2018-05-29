@@ -3,7 +3,7 @@ package me.edgeconsult.flappybird;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class GrassSprite {
+public class GrassSprite implements GameObject {
 
     private Bitmap image;
     private int grassWidth, grassHeight;

@@ -8,88 +8,74 @@ import java.util.Random;
 
 public class PipeSprite implements GameObject {
     private Bitmap image;
-    private final Random random = new Random();
-    private BirdSprite birdSprite;
-    private int stop;
+    private int pipeWidth, pipeHeight;
+    //private int stop;
 
     //display constants
     private int displayWidth;
     private int displayHeight;
 
     // physical constants
-    private double posX, posY, posX1, posY1; // позиции для первого и второго столбиков
+    private int x, y;
     private double velX = 10;
-    private double velX1 = 10;
 
-    public PipeSprite( Bitmap image, int displayWidth, int displayHeight ) {
+    // gap value between pipes
+    private int gap = 300;
+
+    public PipeSprite(Bitmap image, int displayWidth, int displayHeight) {
         // TODO: масштабировать стоблик для корректного отображения
         this.image = image;
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
-        posX = displayWidth;
-        posX1 = displayWidth + displayWidth/2;
-        posY = random.nextInt((displayHeight)/2) + displayHeight/4;
-        posY1 = random.nextInt((displayHeight)/2) + displayHeight/4;
-
+        this.pipeWidth = image.getWidth();
+        this.pipeHeight = image.getHeight();
     }
 
-    public void setStop(int stop) {
-        this.stop = stop;
+    public boolean intersect(Rect rect) {
+        Rect top = new Rect(x - pipeWidth / 2,
+                y - gap / 2 - pipeHeight,
+                x + pipeWidth / 2,
+                y - gap / 2);
+        Rect bottom = new Rect(x - pipeWidth / 2,
+                y + gap / 2,
+                x + pipeWidth / 2,
+                y + gap / 2 + pipeHeight);
+        return rect.intersect(top) || rect.intersect(bottom);
     }
-    public  int getX() {
-        return (int) posX;
-    }
-
-    public  int getY() {
-        return (int) posY;
-    }
-
-    public  int getX1() {
-        return (int) posX1;
-    }
-
-    public  int getY1() {
-        return (int) posY1;
-    }
-
-    public int getWidht() {
-        return  image.getWidth();
-    }
-
-
 
     public void update() {
-
-if (stop == 1 ) {
-
-    velX = 0;
-    velX1 = 0;
-}
-        if (posX < 0 - image.getWidth() ) {
-            posX = displayWidth;
-            posY = random.nextInt(displayHeight/2) + displayHeight/4;
-        }
-        if (posX1 < 0 - image.getWidth() ) {
-            posX1 = displayWidth;
-            posY1 = random.nextInt(displayHeight/2) + displayHeight/4;
-        }
-        posX = posX - velX;
-        posX1 = posX1 - velX1;
-
-
-
+        x -= velX;
     }
 
     public void draw (Canvas canvas) {
-        canvas.drawBitmap(image, (int)posX , (int)posY, null);
+        canvas.drawBitmap(image, x - pipeWidth / 2, y + gap / 2, null);
         canvas.save();
-        canvas.rotate(180, (float)posX , (float) posY);
-        canvas.drawBitmap(image, (int) posX - image.getWidth(), (int) posY + 70, null );
+        canvas.rotate(180, x, y);
+        canvas.drawBitmap(image, x - pipeWidth / 2, y + gap / 2, null );
         canvas.restore();
-        canvas.drawBitmap(image, (int) posX1, (int) posY1, null);
-        canvas.save();
-        canvas.rotate(180, (float)posX1 ,(float) posY1);
-        canvas.drawBitmap(image, (int) posX1 - image.getWidth(), (int) posY1 + 70, null );
-        canvas.restore();
+    }
+
+    public int getWidht() {
+        return this.pipeWidth;
+    }
+
+    public int getHeight() {
+        return this.pipeHeight;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

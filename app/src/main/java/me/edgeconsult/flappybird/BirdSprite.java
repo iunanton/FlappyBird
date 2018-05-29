@@ -6,7 +6,6 @@ import android.graphics.Rect;
 
 public class BirdSprite implements GameObject{
     private Bitmap image;
-    private int stop;
 
     private final int BMP_ROWS = 6;
     private final int BMP_COLUMNS = 3;
@@ -23,8 +22,8 @@ public class BirdSprite implements GameObject{
     // physical constants
     private double posX, posY;
     private double velY = 0;
-    private double accY = 1;
-    private int flapY = 10;
+    private double accY = 3;
+    private int flapY = 50;
 
     public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
         // TODO: масштабировать птицу для корректного отображения
@@ -43,27 +42,6 @@ public class BirdSprite implements GameObject{
         velY -= flapY;
     }
 
-
-    public void setStop(int stop) {
-        this.stop = stop;
-    }
-
-    public  int getX() {
-        return (int) posX;
-    }
-
-    public double getY() {
-        return (int) posY;
-    }
-
-    public double getWidht() {
-        return (int) birdWidth;
-    }
-
-    public double getHight() {
-        return (int) birdHeight;
-    }
-
     public void update() {
         currentFrame++;
         if (posY < displayHeight) {
@@ -73,11 +51,6 @@ public class BirdSprite implements GameObject{
             velY = 0;
             posY = 0;
         }
-        if (stop == 1) {
-            velY = 0;
-            accY = 0;
-            flapY = 0;
-        }
     }
 
     public void draw(Canvas canvas) {
@@ -86,23 +59,18 @@ public class BirdSprite implements GameObject{
         int srcX = currentFrame / flitterCoef % BMP_COLUMNS * birdWidth;
         int srcY = birdHeight;
         Rect src = new Rect(srcX, srcY, srcX + birdWidth, srcY + birdHeight);
-        Rect dst = new Rect(x, y, x + birdWidth, y + birdHeight);
+        Rect dst = new Rect(x - birdWidth / 2,
+                y - birdHeight / 2,
+                x + birdWidth / 2,
+                y + birdHeight / 2);
         canvas.drawBitmap(image, src, dst, null);
     }
 
-    public int getBirdWidth() {
-        return this.birdWidth;
-    }
+    public int getWidth() { return this.birdWidth; }
 
-    public int getBirdHeight() {
-        return this.birdHeight;
-    }
+    public int getHeight() { return this.birdHeight; }
 
-    public int getX() {
-        return (int) this.posX;
-    }
+    public int getX() { return (int) this.posX; }
 
-    public int getY() {
-        return (int) this.posY;
-    }
+    public int getY() { return (int) this.posY; }
 }

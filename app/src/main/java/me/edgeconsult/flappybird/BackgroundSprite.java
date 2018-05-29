@@ -21,12 +21,18 @@ public class BackgroundSprite implements GameObject {
     public void update() {
 
     }
-    public int getHeight() {
-        return backgroundHeight;
-    }
+
     public void draw(Canvas canvas) {
         Rect src = new Rect(0, 0, backgroundWidth, backgroundHeight);
         Rect dst = new Rect(0, 0, displayWidth, displayHeight);
         canvas.drawBitmap(image, src, dst, null);
+    }
+
+    public int getWidth() {
+        return this.backgroundWidth;
+    }
+
+    public int getHeight() {
+        return this.backgroundHeight;
     }
 }

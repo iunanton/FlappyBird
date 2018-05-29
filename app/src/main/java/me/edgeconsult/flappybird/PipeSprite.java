@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class PipeSprite implements GameObject {
     private Bitmap image;
+    private double scale = 0.2; // scale pipe size
+    private int imageWidth, imageHeight;
     private int pipeWidth, pipeHeight;
     //private int stop;
 
@@ -25,10 +27,10 @@ public class PipeSprite implements GameObject {
     public PipeSprite(Bitmap image, int displayWidth, int displayHeight) {
         // TODO: масштабировать стоблик для корректного отображения
         this.image = image;
-        this.displayWidth = displayWidth;
-        this.displayHeight = displayHeight;
-        this.pipeWidth = image.getWidth();
-        this.pipeHeight = image.getHeight();
+        imageWidth = image.getWidth();
+        imageHeight = image.getHeight();
+        pipeWidth = (int) (scale * displayWidth);
+        this.pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
     }
 
     public boolean intersect(Rect rect) {
@@ -48,10 +50,21 @@ public class PipeSprite implements GameObject {
     }
 
     public void draw (Canvas canvas) {
-        canvas.drawBitmap(image, x - pipeWidth / 2, y + gap / 2, null);
+        Rect src = new Rect(0, 0, imageWidth, imageHeight);
+        Rect dst = new Rect(
+                x - pipeWidth / 2,
+                y + gap / 2,
+                x + pipeWidth / 2,
+                y + gap / 2 + pipeHeight);
+        canvas.drawBitmap(image, src, dst, null);
         canvas.save();
         canvas.rotate(180, x, y);
-        canvas.drawBitmap(image, x - pipeWidth / 2, y + gap / 2, null );
+        dst.set(
+                x - pipeWidth / 2,
+                y + gap / 2,
+                x + pipeWidth / 2,
+                y + gap / 2 + pipeHeight);
+        canvas.drawBitmap(image, src, dst, null);
         canvas.restore();
     }
 

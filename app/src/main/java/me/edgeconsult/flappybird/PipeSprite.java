@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import java.util.Random;
 
+import static java.lang.Math.min;
+
 public class PipeSprite implements GameObject {
     private Bitmap image;
     private double scale = 0.2; // scale pipe size
@@ -25,11 +27,10 @@ public class PipeSprite implements GameObject {
     private int gap = 300;
 
     public PipeSprite(Bitmap image, int displayWidth, int displayHeight) {
-        // TODO: масштабировать стоблик для корректного отображения
         this.image = image;
         imageWidth = image.getWidth();
         imageHeight = image.getHeight();
-        pipeWidth = (int) (scale * displayWidth);
+        pipeWidth = (int) (scale * min(displayWidth, displayHeight));
         pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
         gap = pipeWidth;
     }

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import java.util.Random;
 
-public class PipeSprite {
+public class PipeSprite implements GameObject {
     private Bitmap image;
     private final Random random = new Random();
 
@@ -16,11 +16,11 @@ public class PipeSprite {
 
     // physical constants
     private double posX, posY, posX1, posY1; // позиции для первого и второго столбиков
-    private double velX = 1;
-    private double velX1 = 1;
+    private double velX = 10;
+    private double velX1 = 10;
 
     public PipeSprite( Bitmap image, int displayWidth, int displayHeight ) {
-
+        // TODO: масштабировать стоблик для корректного отображения
         this.image = image;
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
@@ -49,7 +49,7 @@ public class PipeSprite {
 
     }
 
-    public void Draw (Canvas canvas) {
+    public void draw (Canvas canvas) {
         canvas.drawBitmap(image, (int)posX , (int)posY, null);
         canvas.save();
         canvas.rotate(180, (float)posX , (float) posY);

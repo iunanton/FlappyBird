@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class BackgroundSprite {
+public class BackgroundSprite implements GameObject {
 
     private Bitmap image;
     private int displayWidth;
@@ -17,6 +17,10 @@ public class BackgroundSprite {
         this.displayHeight = displayHeight;
         backgroundWidth = image.getWidth() / 2;
         backgroundHeight = image.getHeight();
+    }
+
+    public void update() {
+
     }
 
     public void draw(Canvas canvas) {

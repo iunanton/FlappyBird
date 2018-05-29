@@ -3,7 +3,7 @@ package me.edgeconsult.flappybird;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class PipeSpriteManager {
+public class PipeSpriteManager implements GameObject {
     // здесь храним все столбики, которые доступны для вывода на экран
     // TODO: завести список для хранения всех столбиков
     private PipeSprite pipeSprite;
@@ -28,7 +28,7 @@ public class PipeSpriteManager {
     // просто вызываем в теле цикла метод pipeStripe.draw()
     // TODO: сделать метод драу
     public void draw(Canvas canvas) {
-        pipeSprite.Draw(canvas);
+        pipeSprite.draw(canvas);
     }
 
     // TODO: сделать геттеры координат столбиков для определения столкновений с птицей

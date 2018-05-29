@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class BirdSprite {
+public class BirdSprite implements GameObject {
     private Bitmap image;
 
     private final int BMP_ROWS = 6;
@@ -25,7 +25,10 @@ public class BirdSprite {
     private double accY = 3;
     private int flapY = 50;
 
+
+
     public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
+        // TODO: масштабировать птицу для корректного отображения
         this.image = image;
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
@@ -43,8 +46,13 @@ public class BirdSprite {
 
     public void update() {
         currentFrame++;
-        velY += accY - 0.1 * velY;
-        posY += velY;
+        if (posY < displayHeight) {
+            velY += accY - 0.1 * velY;
+            posY += velY;
+        } else {
+            velY = 0;
+            posY = 0;
+        }
     }
 
     public void draw(Canvas canvas) {

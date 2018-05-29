@@ -10,7 +10,7 @@ public class PipeSprite implements GameObject {
     private double scale = 0.2; // scale pipe size
     private int imageWidth, imageHeight;
     private int pipeWidth, pipeHeight;
-    
+
     // physical constants
     private int x, y;
     private double velX = 10;
@@ -23,7 +23,18 @@ public class PipeSprite implements GameObject {
         imageWidth = image.getWidth();
         imageHeight = image.getHeight();
         pipeWidth = (int) (scale * displayWidth);
-        pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
+        pipeHeight = pipeWidth * imageHeight / imageWidth;
+        gap = pipeWidth;
+    }
+
+    public PipeSprite(Bitmap image, int displayWidth, int displayHeight, int x, int y) {
+        this.image = image;
+        imageWidth = image.getWidth();
+        imageHeight = image.getHeight();
+        pipeWidth = (int) (scale * displayWidth);
+        pipeHeight = pipeWidth * imageHeight / imageWidth;
+        this.x = x;
+        this.y = y;
         gap = pipeWidth;
     }
 

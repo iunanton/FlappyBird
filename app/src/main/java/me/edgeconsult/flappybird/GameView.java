@@ -12,8 +12,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-// TODO: добавить pipes
-
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;

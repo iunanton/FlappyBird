@@ -4,21 +4,13 @@ package me.edgeconsult.flappybird;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import java.util.Random;
-
-import static java.lang.Math.min;
 
 public class PipeSprite implements GameObject {
     private Bitmap image;
     private double scale = 0.2; // scale pipe size
     private int imageWidth, imageHeight;
     private int pipeWidth, pipeHeight;
-    //private int stop;
-
-    //display constants
-    private int displayWidth;
-    private int displayHeight;
-
+    
     // physical constants
     private int x, y;
     private double velX = 10;
@@ -30,7 +22,7 @@ public class PipeSprite implements GameObject {
         this.image = image;
         imageWidth = image.getWidth();
         imageHeight = image.getHeight();
-        pipeWidth = (int) (scale * min(displayWidth, displayHeight));
+        pipeWidth = (int) (scale * displayWidth);
         pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
         gap = pipeWidth;
     }

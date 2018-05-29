@@ -30,7 +30,8 @@ public class PipeSprite implements GameObject {
         imageWidth = image.getWidth();
         imageHeight = image.getHeight();
         pipeWidth = (int) (scale * displayWidth);
-        this.pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
+        pipeHeight = (int) (pipeWidth * imageHeight / imageWidth);
+        gap = pipeWidth;
     }
 
     public boolean intersect(Rect rect) {

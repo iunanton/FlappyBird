@@ -30,4 +30,6 @@ public class PipeSpriteManager {
     public void draw(Canvas canvas) {
         pipeSprite.Draw(canvas);
     }
+
+    // TODO: сделать геттеры координат столбиков для определения столкновений с птицей
 }

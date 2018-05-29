@@ -9,6 +9,8 @@ import java.util.Random;
 public class PipeSprite implements GameObject {
     private Bitmap image;
     private final Random random = new Random();
+    private BirdSprite birdSprite;
+    private int stop;
 
     //display constants
     private int displayWidth;
@@ -31,11 +33,38 @@ public class PipeSprite implements GameObject {
 
     }
 
+    public void setStop(int stop) {
+        this.stop = stop;
+    }
+    public  int getX() {
+        return (int) posX;
+    }
+
+    public  int getY() {
+        return (int) posY;
+    }
+
+    public  int getX1() {
+        return (int) posX1;
+    }
+
+    public  int getY1() {
+        return (int) posY1;
+    }
+
+    public int getWidht() {
+        return  image.getWidth();
+    }
+
+
+
     public void update() {
-        //st2 = SpriteBird.getSt();
-        //if (st2 == 1 ) {
-          //  velX = 0;
-        //}
+
+if (stop == 1 ) {
+
+    velX = 0;
+    velX1 = 0;
+}
         if (posX < 0 - image.getWidth() ) {
             posX = displayWidth;
             posY = random.nextInt(displayHeight/2) + displayHeight/4;
@@ -46,6 +75,8 @@ public class PipeSprite implements GameObject {
         }
         posX = posX - velX;
         posX1 = posX1 - velX1;
+
+
 
     }
 

@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
+// TODO: добавить pipes
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
@@ -95,9 +97,62 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
+
+    public void isCollision () {
+        if( birdSprite.getX() + birdSprite.getWidht() ==  pipeSprite.getX() && birdSprite.getY() < pipeSprite.getY() - 70) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() >  pipeSprite.getX() && birdSprite.getY() < pipeSprite.getY() - 70 && birdSprite.getX() < pipeSprite.getX() + pipeSprite.getWidht()) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() ==  pipeSprite.getX() && birdSprite.getY() + birdSprite.getHight() > pipeSprite.getY()) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() >  pipeSprite.getX() && birdSprite.getY() + birdSprite.getHight() > pipeSprite.getY() && birdSprite.getX() < pipeSprite.getX() + pipeSprite.getWidht()) {
+
+            pipeSprite.setStop(1);
+            birdSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() ==  pipeSprite.getX1() && birdSprite.getY() < pipeSprite.getY1() - 70) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() >  pipeSprite.getX1() && birdSprite.getY() < pipeSprite.getY1() - 70 && birdSprite.getX() < pipeSprite.getX1() + pipeSprite.getWidht()) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() ==  pipeSprite.getX1() && birdSprite.getY() + birdSprite.getHight() > pipeSprite.getY1()) {
+
+            pipeSprite.setStop(1);
+        }
+
+        if( birdSprite.getX() + birdSprite.getWidht() >  pipeSprite.getX1() && birdSprite.getY() + birdSprite.getHight() > pipeSprite.getY1() && birdSprite.getX() < pipeSprite.getX1() + pipeSprite.getWidht()) {
+
+            pipeSprite.setStop(1);
+            birdSprite.setStop(1);
+        }
+
+        if (birdSprite.getY() + birdSprite.getHight() > backgroundSprite.getHeight())
+        {
+            pipeSprite.setStop(1);
+            birdSprite.setStop(1);
+        }
+
+    }
+
     // TODO: проверять на столкновение где-то тут
 
     public void update() {
+        isCollision();
         grassSprite.update();
         birdSprite.update();
         pipeSpriteManager.update();

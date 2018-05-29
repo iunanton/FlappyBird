@@ -18,11 +18,12 @@ public class BackgroundSprite implements GameObject {
         backgroundWidth = image.getWidth() / 2;
         backgroundHeight = image.getHeight();
     }
-
     public void update() {
 
     }
-
+    public int getHeight() {
+        return backgroundHeight;
+    }
     public void draw(Canvas canvas) {
         Rect src = new Rect(0, 0, backgroundWidth, backgroundHeight);
         Rect dst = new Rect(0, 0, displayWidth, displayHeight);

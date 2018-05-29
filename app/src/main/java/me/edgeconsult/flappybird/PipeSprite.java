@@ -50,7 +50,6 @@ public class PipeSprite {
     }
 
     public void Draw (Canvas canvas) {
-        update();
         canvas.drawBitmap(image, (int)posX , (int)posY, null);
         canvas.save();
         canvas.rotate(180, (float)posX , (float) posY);

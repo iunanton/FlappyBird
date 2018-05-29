@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-// TODO: зделать активити с меню
+// TODO: cделать активити с меню
 
 public class MainActivity extends Activity {
 

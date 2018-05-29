@@ -56,4 +56,20 @@ public class BirdSprite {
         Rect dst = new Rect(x, y, x + birdWidth, y + birdHeight);
         canvas.drawBitmap(image, src, dst, null);
     }
+
+    public int getBirdWidth() {
+        return this.birdWidth;
+    }
+
+    public int getBirdHeight() {
+        return this.birdHeight;
+    }
+
+    public int getX() {
+        return (int) this.posX;
+    }
+
+    public int getY() {
+        return (int) this.posY;
+    }
 }

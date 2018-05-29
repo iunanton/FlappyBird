@@ -11,8 +11,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-// TODO: добавить pipes
-
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
@@ -113,6 +111,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawText("FPS: " + thread.getAverageFPS(), 50,50, paint);
             canvas.drawText("DW: " + displayWidth, 50,100, paint);
             canvas.drawText("DH: " + displayHeight, 50,150, paint);
+            canvas.drawText("PX: " + birdSprite.getX(), 50,200, paint);
+            canvas.drawText("PY: " + birdSprite.getY(), 50,250, paint);
             birdSprite.draw(canvas);
         }
     }

@@ -13,10 +13,10 @@ public class PipeSprite implements GameObject {
 
     // physical constants
     private int x, y;
-    private double velX = 1;
+    private double velX = 10; // 1
 
     // gap value between pipes
-    private int gap = 300;
+    private int gap;
 
     public PipeSprite(Bitmap image, int displayWidth, int displayHeight) {
         this.image = image;

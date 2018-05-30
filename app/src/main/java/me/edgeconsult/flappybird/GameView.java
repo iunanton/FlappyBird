@@ -21,13 +21,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private GrassSprite grassSprite;
     private BirdSprite birdSprite;
     private PipeSpriteManager pipeSpriteManager;
+    private GameOverSprite gameOverSprite;
     private Paint paint;
     private int displayWidth;
     private int displayHeight;
 
     //звук
     private SoundPool sounds;
-    private int sExplosion;
+    private int sExplosionFlap;
+    private int sExplosionGameOver;
 
     // останов игры
     private boolean gameover = false;
@@ -51,7 +53,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         displayHeight = displayMetrics.heightPixels;
 
         sounds = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
-        sExplosion = sounds.load(context, R.raw.sfx_wing, 1);
+        sExplosionFlap = sounds.load(context, R.raw.sfx_wing, 1);
+        sExplosionGameOver = sounds.load(context, R.raw.sfx_wing, 1);
     }
 
     @Override
@@ -72,6 +75,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 displayWidth, displayHeight);
         pipeSpriteManager = new PipeSpriteManager(
                 BitmapFactory.decodeResource(getResources(), R.drawable.pipe),
+                displayWidth, displayHeight);
+        gameOverSprite = new GameOverSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.die),
                 displayWidth, displayHeight);
 
 
@@ -99,7 +105,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             performClick(); // для обратной совместимости мы должны вызвать метод performClick
             if(!gameover) {
-                sounds.play(sExplosion, 1.0f, 1.0f, 0, 0, 1.5f);
+                sounds.play(sExplosionFlap, 1.0f, 1.0f, 0, 0, 1.5f);
             }
         }
         return true;
@@ -123,6 +129,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (pipeSpriteManager.intersect(rect) ||
                 (birdSprite.getY() + birdSprite.getHeight() / 2) > backgroundSprite.getHeight()) {
             gameover = true;
+            gameOverSprite.update();
+            sounds.play(sExplosionGameOver, 1.0f, 1.0f, 0, 0, 1.5f);
         }
     }
 
@@ -150,6 +158,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawText("PX: " + birdSprite.getX(), 50,200, paint);
             canvas.drawText("PY: " + birdSprite.getY(), 50,250, paint);
             birdSprite.draw(canvas);
+            gameOverSprite.draw(canvas);
         }
     }
 }

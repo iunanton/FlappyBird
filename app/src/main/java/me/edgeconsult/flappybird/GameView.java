@@ -11,6 +11,8 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -22,6 +24,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint;
     private int displayWidth;
     private int displayHeight;
+
+    //звук
+    private SoundPool sounds;
+    private int sExplosion;
 
     // останов игры
     private boolean gameover = false;
@@ -43,6 +49,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         displayWidth = displayMetrics.widthPixels;
         displayHeight = displayMetrics.heightPixels;
+
+        sounds = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
+        sExplosion = sounds.load(context, R.raw.sfx_wing, 1);
     }
 
     @Override
@@ -64,6 +73,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         pipeSpriteManager = new PipeSpriteManager(
                 BitmapFactory.decodeResource(getResources(), R.drawable.pipe),
                 displayWidth, displayHeight);
+
+
 
         thread.setRunning(true);
         thread.start();
@@ -87,6 +98,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             performClick(); // для обратной совместимости мы должны вызвать метод performClick
+            if(!gameover) {
+                sounds.play(sExplosion, 1.0f, 1.0f, 0, 0, 1.5f);
+            }
         }
         return true;
     }

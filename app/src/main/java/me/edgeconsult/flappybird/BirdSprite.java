@@ -30,8 +30,8 @@ public class BirdSprite implements GameObject{
     // physical constants
     private double posX, posY;
     private double velY = 0;
-    private double accY = 3;
-    private int flapY = 50; // 20
+    private double accY = 3;  //1
+    private int flapY = 50; // 10
 
     public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
         // TODO: масштабировать птицу для корректного отображения

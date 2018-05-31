@@ -26,12 +26,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int displayWidth;
     private int displayHeight;
 
-    //звук
     private SoundPool sounds;
     private int sExplosionFlap;
     private int sExplosionGameOver;
 
-    // останов игры
     private boolean gameover = false;
 
     public GameView(Context context) {
@@ -54,7 +52,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         sounds = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
         sExplosionFlap = sounds.load(context, R.raw.sfx_wing, 1);
-        sExplosionGameOver = sounds.load(context, R.raw.sfx_wing, 1);
+        sExplosionGameOver = sounds.load(context, R.raw.sfx_die, 1);
     }
 
     @Override
@@ -80,8 +78,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 BitmapFactory.decodeResource(getResources(), R.drawable.die),
                 displayWidth, displayHeight);
 
-
-
         thread.setRunning(true);
         thread.start();
     }
@@ -103,7 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            performClick(); // для обратной совместимости мы должны вызвать метод performClick
+            performClick();
             if(!gameover) {
                 sounds.play(sExplosionFlap, 1.0f, 1.0f, 0, 0, 1.5f);
             }
@@ -111,7 +107,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
-    // здесь производим обработку нажатия
     @Override
     public boolean performClick() {
         super.performClick();
@@ -119,22 +114,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
-
     public void isCollision () {
-        Rect rect = new Rect(
-                birdSprite.getX() - birdSprite.getWidth() / 2,
-                birdSprite.getY() - birdSprite.getHeight() / 2,
-                birdSprite.getX() + birdSprite.getWidth() / 2,
-                birdSprite.getY() + birdSprite.getHeight() / 2);
-        if (pipeSpriteManager.intersect(rect) ||
-                (birdSprite.getY() + birdSprite.getHeight() / 2) > backgroundSprite.getHeight()) {
-            gameover = true;
-            gameOverSprite.update();
-            sounds.play(sExplosionGameOver, 1.0f, 1.0f, 0, 0, 1.5f);
+        if (!gameover) {
+            Rect rect = new Rect(
+                    birdSprite.getX() - birdSprite.getWidth() / 2,
+                    birdSprite.getY() - birdSprite.getHeight() / 2,
+                    birdSprite.getX() + birdSprite.getWidth() / 2,
+                    birdSprite.getY() + birdSprite.getHeight() / 2);
+            if (pipeSpriteManager.intersect(rect) ||
+                    (birdSprite.getY() + birdSprite.getHeight() / 2) > backgroundSprite.getHeight()) {
+                gameover = true;
+                sounds.play(
+                        sExplosionGameOver,
+                        1.0f,
+                        1.0f,
+                        0,
+                        0,
+                        1.5f);
+            }
         }
     }
-
-    // TODO: проверять на столкновение где-то тут
 
     public void update() {
         isCollision();
@@ -142,6 +141,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             grassSprite.update();
             birdSprite.update();
             pipeSpriteManager.update();
+        } else {
+            gameOverSprite.update();
         }
     }
 

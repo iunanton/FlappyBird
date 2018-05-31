@@ -13,7 +13,7 @@ public class PipeSprite implements GameObject {
 
     // physical constants
     private int x, y;
-    private double velX = 10; // 2
+    private double velX = 10; // 1
 
     // gap value between pipes
     private int gap;

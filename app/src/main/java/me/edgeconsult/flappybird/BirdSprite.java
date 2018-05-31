@@ -6,13 +6,7 @@ import android.graphics.Rect;
 
 public class BirdSprite implements GameObject{
     private Bitmap image;
-    //private Bitmap image1;
     private double scale = 0.1; // 0.2
-
-    //private double widht;
-    //private double height;
-    //private double widht1;
-    //private double height1;
 
     private final int BMP_ROWS = 6;
     private final int BMP_COLUMNS = 3;
@@ -30,11 +24,10 @@ public class BirdSprite implements GameObject{
     // physical constants
     private double posX, posY;
     private double velY = 0;
-    private double accY = 3;  //1
+    private double accY = 3;  // 1
     private int flapY = 50; // 10
 
     public BirdSprite(Bitmap image, int displayWidth, int displayHeight) {
-        // TODO: масштабировать птицу для корректного отображения
         this.image = image;
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
@@ -45,13 +38,8 @@ public class BirdSprite implements GameObject{
         birdWidth = (int) (scale * displayWidth);
         birdHeight = birdWidth * imageHeight / imageWidth;
 
-        //widht = scale*displayWidth;
-        //height = scale*displayHeight;
-        //birdWidth = (int) widht;
-        //birdHeight = (int) height;
-
-        posX = (displayWidth - birdWidth) / 2;
-        posY = (displayHeight - birdHeight) / 2;
+        posX = displayWidth / 2;
+        posY = displayHeight / 2;
     }
 
     public void flap() {
@@ -79,10 +67,6 @@ public class BirdSprite implements GameObject{
                 y - birdHeight / 2,
                 x + birdWidth / 2,
                 y + birdHeight / 2);
-
-        //widht1 = displayWidth*1.2;
-        //height1 = displayHeight*1.1;
-        //Bitmap image1 = Bitmap.createScaledBitmap(image, (int) widht1, (int) height1, true);
         canvas.drawBitmap(image, src, dst, null);
     }
 

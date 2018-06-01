@@ -24,7 +24,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private PipeSpriteManager pipeSpriteManager;
     private GameOverSprite gameOverSprite;
     private RestartSprite restartSprite;
-    private TouchRestart touchRestart;
+    private MainActivity mainActivity;
     private Paint paint;
     private int displayWidth;
     private int displayHeight;
@@ -114,8 +114,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 if (event.getX() > restartSprite.getX() && event.getX() < restartSprite.getX() + restartSprite.getWidht()
                         && event.getY() > restartSprite.getY() && event.getY() < restartSprite.getY() + restartSprite.getHeight()) {
-                    touchRestart = new TouchRestart();
-                    touchRestart.restart();
+                    mainActivity = new MainActivity();
+                    mainActivity.recreate();
                 }
             }
             }

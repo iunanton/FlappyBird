@@ -2,6 +2,7 @@ package me.edgeconsult.flappybird;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,6 +23,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private BirdSprite birdSprite;
     private PipeSpriteManager pipeSpriteManager;
     private GameOverSprite gameOverSprite;
+    private RestartSprite restartSprite;
+    private TouchRestart touchRestart;
     private Paint paint;
     private int displayWidth;
     private int displayHeight;
@@ -77,6 +80,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameOverSprite = new GameOverSprite(
                 BitmapFactory.decodeResource(getResources(), R.drawable.die),
                 displayWidth, displayHeight);
+        restartSprite = new RestartSprite(
+                BitmapFactory.decodeResource(getResources(), R.drawable.restart),
+                displayWidth, displayHeight);
 
         thread.setRunning(true);
         thread.start();
@@ -103,7 +109,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             if(!gameover) {
                 sounds.play(sExplosionFlap, 1.0f, 1.0f, 0, 0, 1.5f);
             }
-        }
+
+            if (gameover) {
+
+                if (event.getX() > restartSprite.getX() && event.getX() < restartSprite.getX() + restartSprite.getWidht()
+                        && event.getY() > restartSprite.getY() && event.getY() < restartSprite.getY() + restartSprite.getHeight()) {
+                    touchRestart = new TouchRestart();
+                    touchRestart.restart();
+                }
+            }
+            }
         return true;
     }
 
@@ -143,6 +158,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             pipeSpriteManager.update();
         } else {
             gameOverSprite.update();
+            restartSprite.update();
         }
     }
 
@@ -160,6 +176,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawText("PY: " + birdSprite.getY(), 50,250, paint);
             birdSprite.draw(canvas);
             gameOverSprite.draw(canvas);
+            restartSprite.draw(canvas);
         }
     }
 }

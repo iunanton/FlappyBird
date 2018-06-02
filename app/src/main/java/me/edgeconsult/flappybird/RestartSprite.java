@@ -38,11 +38,9 @@ private StartActivity startActivity;
 
     }
 
-
-
     public void update() {
         posY -= velY;
-        if (posY < displayHeight / 2 + displayHeight/4 + restartHeight) {
+        if (posY < displayHeight / 2 + displayHeight/16 + restartHeight) {
             velY = 0;
         }
     }
@@ -58,7 +56,7 @@ private StartActivity startActivity;
         canvas.drawBitmap(image, src, dst, null);
     }
 
-public int getX() {
+    public int getX() {
         return (int) posX;
     }
 
@@ -72,6 +70,15 @@ public int getX() {
 
     public int getHeight() {
         return restartHeight;
+    }
+
+    public boolean contains(int x, int y) {
+        Rect rect = new Rect(
+                getX() - getWidht() / 2,
+                getY() - getHeight() / 2,
+                getX() + getWidht() / 2,
+                getY() + getHeight() / 2);
+        return rect.contains(x,y);
     }
 }
 

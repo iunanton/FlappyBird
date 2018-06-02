@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -111,21 +112,40 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if (gameover) {
-
-                if (event.getX() > restartSprite.getX() && event.getX() < restartSprite.getX() + restartSprite.getWidht()
-                        && event.getY() > restartSprite.getY() && event.getY() < restartSprite.getY() + restartSprite.getHeight()) {
-                    mainActivity = new MainActivity();
-                    mainActivity.recreate();
+                //Log.d("Event", "X: " + event.getX() + " Y: " + event.getY());
+                if (restartSprite.contains((int)event.getX(), (int)event.getY())) {
+                    //Log.d("Event", "Match!");
+                    backgroundSprite = new BackgroundSprite(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.bgg),
+                            displayWidth, displayHeight);
+                    grassSprite = new GrassSprite(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.grass),
+                            displayWidth, displayHeight);
+                    birdSprite = new BirdSprite(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.bird),
+                            displayWidth, displayHeight);
+                    pipeSpriteManager = new PipeSpriteManager(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.pipe),
+                            displayWidth, displayHeight);
+                    gameOverSprite = new GameOverSprite(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.die),
+                            displayWidth, displayHeight);
+                    restartSprite = new RestartSprite(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.restart),
+                            displayWidth, displayHeight);
+                    gameover = false;
                 }
             }
-            }
+        }
         return true;
     }
 
     @Override
     public boolean performClick() {
-        super.performClick();
-        birdSprite.flap();
+        if (!gameover) {
+            super.performClick();
+            birdSprite.flap();
+        }
         return true;
     }
 

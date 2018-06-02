@@ -37,7 +37,7 @@ public class GameOverSprite implements GameObject {
 
     public void update() {
         posY += velY;
-        if (posY > displayHeight / 2) {
+        if (posY > displayHeight / 2 - displayHeight/16 - gameoverHeight) {
             velY = 0;
         }
     }
